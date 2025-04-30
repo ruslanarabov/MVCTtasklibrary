@@ -142,3 +142,4 @@
 /Users/macbook/Desktop/MvcTask1/Mvctasks1/Mvctasks1/bin/Debug/net8.0/runtimes/win/lib/net6.0/System.Windows.Extensions.dll
 /Users/macbook/Desktop/MvcTask1/Mvctasks1/Mvctasks1/obj/Debug/net8.0/Mvctasks1.csproj.AssemblyReference.cache
 /Users/macbook/Desktop/MvcTask1/Mvctasks1/Mvctasks1/obj/Debug/net8.0/Mvctasks1.csproj.Up2Date
+/Users/macbook/Desktop/MvcTask1/Mvctasks1/Mvctasks1/obj/Debug/net8.0/Mvctasks1.sourcelink.json

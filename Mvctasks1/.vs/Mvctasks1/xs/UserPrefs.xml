@@ -1,11 +1,18 @@
 ﻿<Properties StartupConfiguration="{FE4BA891-3C17-4D11-8A62-F5F30EFBB1A3}|https">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Mvctasks1/Views/Shared/_Layout.cshtml">
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Mvctasks1/Views/Books/Delete.cshtml">
     <Files>
-      <File FileName="Mvctasks1/Entity/Book.cs" Line="1" Column="1" />
-      <File FileName="Mvctasks1/Controllers/BooksController.cs" Line="112" Column="11" />
+      <File FileName="Mvctasks1/Entity/Book.cs" />
+      <File FileName="Mvctasks1/Controllers/BooksController.cs" Line="195" Column="12" />
       <File FileName="Mvctasks1/Views/Books/Create.cshtml" Line="14" Column="55" />
       <File FileName="Mvctasks1/Views/Shared/_Layout.cshtml" Line="26" Column="98" />
-      <File FileName="Mvctasks1/Views/Home/Index.cshtml" Line="1" Column="1" />
+      <File FileName="Mvctasks1/Views/Home/Index.cshtml" />
+      <File FileName="Mvctasks1/Views/Books/Delete.cshtml" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -15,33 +22,24 @@
               <Node name="Controllers" expanded="True" />
               <Node name="Data" expanded="True" />
               <Node name="Entity" expanded="True" />
-              <Node name="ViewModel" expanded="True">
+              <Node name="ViewModel">
                 <Node name="Book" expanded="True" />
               </Node>
               <Node name="Views" expanded="True">
                 <Node name="Author" expanded="True" />
-                <Node name="Books" expanded="True" />
+                <Node name="Books" expanded="True">
+                  <Node name="Delete.cshtml" selected="True" />
+                </Node>
                 <Node name="Home" expanded="True" />
                 <Node name="Publisher" expanded="True" />
-                <Node name="Shared" expanded="True">
-                  <Node name="_Layout.cshtml" selected="True" />
-                </Node>
+                <Node name="Shared" expanded="True" />
               </Node>
               <Node name="appsettings.json" expanded="True" />
             </Node>
           </Node>
         </State>
       </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
-      </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.ItemProperties.Mvctasks1 PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

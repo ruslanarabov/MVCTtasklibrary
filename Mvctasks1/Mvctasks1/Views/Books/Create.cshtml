@@ -1,41 +1,57 @@
-﻿@model Mvctasks1.Entity.Book
+﻿@model Mvctasks1.ViewModel.Book.BookCreateVM
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<div class="input-group mb-3">
-    <span class="input-group-text" id="basic-addon1"></span>
-    <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-</div>
-
-<div class="input-group mb-3">
-    <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
-    <span class="input-group-text" id="basic-addon2"> example.com</span>
-</div>
-
-<div class="mb-3">
-    <label for="basic-url" class="form-label">Your vanity URL</label>
-    <div class="input-group">
-        <span class="input-group-text" id="basic-addon3">https://example.com/users/</span>
-        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4">
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
     </div>
-    <div class="form-text" id="basic-addon4">Example help text goes outside the input group.</div>
-</div>
 
-<div class="input-group mb-3">
-    <span class="input-group-text">$</span>
-    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-    <span class="input-group-text">.00</span>
-</div>
+    <div class="form-group">
+        <label asp-for="SelectedAuthorIds">Authors</label>
+        <select asp-for="SelectedAuthorIds" class="form-control" asp-items="Model.Authors" multiple></select>
+        <span asp-validation-for="SelectedAuthorIds" class="text-danger"></span>
+    </div>
 
-<div class="input-group mb-3">
-    <input type="text" class="form-control" placeholder="Username" aria-label="Username">
-    <span class="input-group-text"></span>
-    <input type="text" class="form-control" placeholder="Server" aria-label="Server">
-</div>
+    <div class="form-group">
+        <label asp-for="BookCategoryId">Book Category</label>
+        <select asp-for="BookCategoryId" class="form-control" asp-items="Model.BookCategories"></select>
+        <span asp-validation-for="BookCategoryId" class="text-danger"></span>
+    </div>
 
-<div class="input-group">
-    <span class="input-group-text">With textarea</span>
-    <textarea class="form-control" aria-label="With textarea"></textarea>
-</div>
+    <div class="form-group">
+        <label asp-for="PublisherId">Publisher</label>
+        <select asp-for="PublisherId" class="form-control" asp-items="Model.Publishers"></select>
+        <span asp-validation-for="PublisherId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+        
+
+    <div class="form-group">
+        <label asp-for="PublicationDate"></label>
+        <input asp-for="PublicationDate" type="date" class="form-control" />
+        <span asp-validation-for="PublicationDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Price"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+
+<p>
+    <a class="btn btn-outline-secondary mt-3" asp-action="Index">Back to List</a>
+</p>

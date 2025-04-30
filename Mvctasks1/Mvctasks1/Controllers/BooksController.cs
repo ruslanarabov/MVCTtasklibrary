@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Mvctasks1.Data;
 using Mvctasks1.Entity;
+using Mvctasks1.ViewModel.Book;
 
 namespace Mvctasks1.Controllers
 {
@@ -19,10 +20,12 @@ namespace Mvctasks1.Controllers
         // Books
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Books
+            var applicationDbContext =await _context.Books
                 .Include(b => b.BookCategory)
-                .Include(b => b.Publisher);
-            return View(await applicationDbContext.ToListAsync());
+                .Include(b => b.Publisher).ToListAsync();
+
+            //var datas = await applicationDbContext.ToListAsync();
+            return View(applicationDbContext);
         }
 
         // Details yeri
@@ -47,47 +50,65 @@ namespace Mvctasks1.Controllers
             return View(book);
         }
 
-        // Create yeri
+        // Create (GET)
         public IActionResult Create()
         {
-            ViewData["BookCategoryId"] = new SelectList(_context.BookCategories, "Id", "Name");
-            ViewData["PublisherId"] = new SelectList(_context.Publishers, "Id", "Name");
-            ViewData["Authors"] = new MultiSelectList(_context.Authors, "Id", "FullName");
-            return View();
+            var vm = new BookCreateVM
+            {
+                BookCategories = _context.BookCategories
+                    .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }).ToList(),
+                Publishers = _context.Publishers
+                    .Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.Name }).ToList(),
+                Authors = _context.Authors
+                    .Select(a => new SelectListItem { Value = a.Id.ToString(), Text = a.FullName }).ToList()
+            };
+            return View(vm);
         }
 
-        // Create yeri
+        // Create (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,ISBN,PublicationDate,Price,BookCategoryId,PublisherId")] Book book, int[] selectedAuthors)
+        public async Task<IActionResult> Create(BookCreateVM vm)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(book);
-                await _context.SaveChangesAsync();
-
-                // author add etme yeri
-                if (selectedAuthors != null)
-                {
-                    foreach (var authorId in selectedAuthors)
-                    {
-                        _context.BookAuthors.Add(new BookAuthors
-                        {
-                            BookId = book.Id,
-                            AuthorId = authorId
-                        });
-                    }
-                    await _context.SaveChangesAsync();
-                }
-
-                TempData["Success"] = "Book created successfully!";
-                return RedirectToAction(nameof(Index));
+                vm.BookCategories = _context.BookCategories
+                    .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }).ToList();
+                vm.Publishers = _context.Publishers
+                    .Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.Name }).ToList();
+                vm.Authors = _context.Authors
+                    .Select(a => new SelectListItem { Value = a.Id.ToString(), Text = a.FullName }).ToList();
+                return View(vm);
             }
-            ViewData["BookCategoryId"] = new SelectList(_context.BookCategories, "Id", "Name", book.BookCategoryId);
-            ViewData["PublisherId"] = new SelectList(_context.Publishers, "Id", "Name", book.PublisherId);
-            ViewData["Authors"] = new MultiSelectList(_context.Authors, "Id", "FullName");
-            TempData["Error"] = "There was an error creating the book.";
-            return View(book);
+
+            var book = new Mvctasks1.Entity.Book
+            {
+                Title = vm.Title,
+                Description = vm.Description,
+                PublicationDate = vm.PublicationDate,
+                Price = vm.Price,
+                BookCategoryId = vm.BookCategoryId,
+                PublisherId = vm.PublisherId
+            };
+
+            _context.Books.Add(book);
+            await _context.SaveChangesAsync();
+
+            if (vm.SelectedAuthorIds != null && vm.SelectedAuthorIds.Any())
+            {
+                foreach (var authorId in vm.SelectedAuthorIds)
+                {
+                    _context.BookAuthors.Add(new BookAuthors
+                    {
+                        BookId = book.Id,
+                        AuthorId = authorId
+                    });
+                }
+                await _context.SaveChangesAsync();
+            }
+
+            TempData["Success"] = "Book created successfully!";
+            return RedirectToAction(nameof(Index));
         }
 
         // Edit yeri (update)
@@ -116,7 +137,7 @@ namespace Mvctasks1.Controllers
             return View(book);
         }
 
-        // POST: Books/Edit/5
+        // Edit/
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,ISBN,PublicationDate,Price,BookCategoryId,PublisherId")] Book book, int[] selectedAuthors)
@@ -132,11 +153,11 @@ namespace Mvctasks1.Controllers
                 {
                     _context.Update(book);
 
-                    // Remove existing author relationships
+                    
                     var existingBookAuthors = _context.BookAuthors.Where(ba => ba.BookId == book.Id);
                     _context.BookAuthors.RemoveRange(existingBookAuthors);
 
-                    // Add selected authors
+                    
                     if (selectedAuthors != null)
                     {
                         foreach (var authorId in selectedAuthors)
@@ -172,7 +193,7 @@ namespace Mvctasks1.Controllers
             return View(book);
         }
 
-        // GET: Books/Delete/5
+        // Delete yeri
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -192,7 +213,7 @@ namespace Mvctasks1.Controllers
             return View(book);
         }
 
-        // POST: Books/Delete/5
+        // Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

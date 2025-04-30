@@ -11,6 +11,9 @@ namespace Mvctasks1.Entity
         public Publisher Publisher { get; set; }
 
         public ICollection<BookAuthors> BookAuthors { get; set; }
+        public string Description { get;  set; }
+        public DateTime PublicationDate { get;  set; }
+        public decimal Price { get;  set; }
     }
 }
 
